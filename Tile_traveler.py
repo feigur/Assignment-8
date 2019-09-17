@@ -41,7 +41,7 @@ def can_move(pos_north, pos_south, pos_west, pos_east) :
     if pos_south :
         possible_directions += " or (S)outh"
     possible_directions = "You can travel: " + possible_directions.replace(" or ", "", 1) + "."
-    return possible_directions
+    print(possible_directions)
 
           
 
@@ -59,4 +59,62 @@ def moves(pos1,pos2,direction):
     if direction == "W":
         if pos2-1 > 0:
             pos2 -= 1
-        
+    return pos1, pos2
+def position(pos1, pos2):
+    N = False
+    S = False
+    E = False
+    W = False
+
+    if pos1 == 1 and pos2 == 1:
+        N = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 1 and pos2 == 2:
+        N = True
+        S = True
+        E = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 1 and pos2 == 3:
+        S = True
+        E = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 2 and pos2 == 1:
+        N = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 2 and pos2 == 2:
+        S = True
+        W = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 2 and pos2 == 3:
+        E = True
+        W = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 3 and pos2 == 1:
+        N = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 3  and pos2 == 2:
+        N = True
+        S = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+    elif pos1 == 3 and pos2 == 3:
+        S = True
+        W = True
+        can_move(N,S,W,E)
+        return user_input(N,S,W,E)
+
+pos1 = 1
+pos2 = 1
+while True:
+    direction= position(pos1,pos2)
+    pos2,pos1 = moves(pos2,pos1,direction)
+    if pos1 == 3 and pos2 == 1:
+        break
+print("Victory!")

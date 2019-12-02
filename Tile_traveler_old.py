@@ -30,7 +30,7 @@ def user_input(pos_north, pos_south, pos_west, pos_east) :
             print("Not a valid direction!")
 
  
-def can_move(pos_north, pos_south, pos_west, pos_east) :
+def can_move(pos_north, pos_south, pos_west, pos_east, ) :
     possible_directions = ""
     if pos_north :
         possible_directions += " or (N)orth" 
@@ -40,81 +40,98 @@ def can_move(pos_north, pos_south, pos_west, pos_east) :
         possible_directions += " or (S)outh"
     if pos_west :
         possible_directions += " or (W)est" 
+
     possible_directions = "You can travel: " + possible_directions.replace(" or ", "", 1) + "."
     print(possible_directions)
 
           
 
 
-def moves(pos1,pos2,direction):
+def moves(pos, direction):
+    vertical_index = 1
+    horizontal_index = 0
     if direction == "N":
-        if pos1+1 < 4:
-            pos1 += 1
+        if pos[vertical_index] + 1 < 4:
+            pos[vertical_index] += 1
     if direction == "S":
-        if pos1-1 > 0:
-            pos1 -= 1
+        if pos[vertical_index] - 1 > 0:
+            pos[vertical_index] -= 1
     if direction == "E":
-        if pos2+1 < 4:
-            pos2 += 1
+        if pos[horizontal_index] + 1 < 4:
+            pos[horizontal_index] += 1
     if direction == "W":
-        if pos2-1 > 0:
-            pos2 -= 1
-    return pos1, pos2
-def position(pos1, pos2):
+        if pos[horizontal_index] - 1 > 0:
+            pos[horizontal_index] -= 1
+    return pos, 
+
+def position(pos, score, ):
     N = False
     S = False
     E = False
     W = False
 
-    if pos1 == 1 and pos2 == 1:
+    if pos == [1,1]:
         N = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 1 and pos2 == 2:
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [1,2]:
         N = True
         S = True
         E = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 1 and pos2 == 3:
+        score = flip_lever(score)
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [1,3]:
         S = True
         E = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 2 and pos2 == 1:
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [2,1]:
         N = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 2 and pos2 == 2:
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [2,2]:
         S = True
         W = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 2 and pos2 == 3:
+        score = flip_lever(score)
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [2,3]:
         E = True
         W = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 3 and pos2 == 1:
+        score = flip_lever(score)
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [3,1]:
         N = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 3  and pos2 == 2:
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [3,2]:
         N = True
         S = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
-    elif pos1 == 3 and pos2 == 3:
+        score = flip_lever(score)
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    elif pos == [3,3]:
         S = True
         W = True
-        can_move(N,S,W,E)
-        return user_input(N,S,W,E)
+        can_move(N, S, W, E, )
+        return user_input(N,S,W,E), score
+    
+def flip_lever(score):
+    y_n = input("Pull a lever (y/n): ")
+    if y_n == "Y" or y_n == "y":
+        score += 1
+        print("You received 1 coin, your total is now {}.".format(score))
+    if  y_n == "N" or y_n == "n":
+        score = score
+    return score
 
-pos1 = 1
-pos2 = 1
+pos = [1,1]
+score = 0
 while True:
-    direction= position(pos1,pos2)
-    pos2,pos1 = moves(pos2,pos1,direction)
-    if pos1 == 3 and pos2 == 1:
+    direction, score = position(pos, score, )
+    pos,  = moves(pos, direction)
+    if pos == [3,1]:
         break
-print("Victory!")
+print("Victory! Total coins {}.".format(score))
